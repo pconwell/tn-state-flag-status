@@ -8,13 +8,9 @@ python:
 addons:
   chrome: stable
 
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install chromium-chromedriver
-  - ls
-  - ls ../
-  - ls ../../
-  - ls ../../../
+#before_install:
+#  - sudo apt-get update
+#  - sudo apt-get install chromium-chromedriver
 
 install:
   - sudo cp -f ./chromedriver /usr/local/share/
@@ -23,6 +19,4 @@ install:
   - pip install selenium
 
 script:
-  - whereis google-chrome-stable
-  - whereis chromedriver
   - python ./status.py
