@@ -11,11 +11,15 @@ addons:
 before_install:
   - sudo apt-get update
   - sudo apt-get install chromium-chromedriver
-  - ls
-  - export PATH=$PATH:./chromedriver
+  - ls ../
 
 install:
+  - sudo cp -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
   - pip install selenium
 
 script:
+  - whereis google-chrome-stable
+  - whereis chromedriver
   - python ./status.py
