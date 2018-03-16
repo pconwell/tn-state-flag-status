@@ -1,16 +1,12 @@
+sudo: false
+
 language: python
-  python:
-    - "3.6"
 
-sudo: required
-dist: trusty
+python:
+  - "3.6"
 
-branches:
-  only:
-  - master
-
-before_install:
-- pip install selenium
+install:
+  - pip install selenium
 
 script:
-- status.py
+  - status.py
