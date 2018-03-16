@@ -10,7 +10,7 @@ branches:
   - master
 
 before_install:
-- sudo pip install selenium
+- pip install selenium
 
 script:
-- python status.py
+- status.py
