@@ -17,41 +17,43 @@ ap.add_argument("-t", "--to", required=True, help="TO eamil address")
 ap.add_argument("--test", default=False, help="for testing")
 args = vars(ap.parse_args())
 
-################################################################################
-## Set options for Selenium
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-options.add_argument('disable-gpu')
-options.add_argument('window-size=1920x1080')
-options.add_argument('log-level=3')
+print(f"{args["user"]}")
 
-################################################################################
-## Get Flag Status
-driver = webdriver.Chrome(chrome_options=options)
-driver.get("https://www.tn.gov/about-tn/flag-status.html")
-
-flag = driver.find_element_by_class_name("textimage-text")
-
-status = flag.text
-print(status)
-
-driver.close()
-driver.quit()
-
-################################################################################
-## Send SMS for flag status
-server = smtplib.SMTP(args["server"], args["port"])
-server.starttls()
-
-server.login(args["user"], args["password"])
-
-if args["test"] == True:
-    status = ":travis-ci testing"
-
-message = f"From: <{args['from']}>\n"
-message = message + f"To: <{args['to']}>\n"
-message = message + "Subject: TN Flag Status\n"
-message = message + "\n"
-message = message + f"{status.split(':')[1]}"
-
-server.sendmail(args["from"], args["to"], message)
+# ################################################################################
+# ## Set options for Selenium
+# options = webdriver.ChromeOptions()
+# options.add_argument('headless')
+# options.add_argument('disable-gpu')
+# options.add_argument('window-size=1920x1080')
+# options.add_argument('log-level=3')
+#
+# ################################################################################
+# ## Get Flag Status
+# driver = webdriver.Chrome(chrome_options=options)
+# driver.get("https://www.tn.gov/about-tn/flag-status.html")
+#
+# flag = driver.find_element_by_class_name("textimage-text")
+#
+# status = flag.text
+# print(status)
+#
+# driver.close()
+# driver.quit()
+#
+# ################################################################################
+# ## Send SMS for flag status
+# server = smtplib.SMTP(args["server"], args["port"])
+# server.starttls()
+#
+# server.login(args["user"], args["password"])
+#
+# if args["test"] == True:
+#     status = ":travis-ci testing"
+#
+# message = f"From: <{args['from']}>\n"
+# message = message + f"To: <{args['to']}>\n"
+# message = message + "Subject: TN Flag Status\n"
+# message = message + "\n"
+# message = message + f"{status.split(':')[1]}"
+#
+# server.sendmail(args["from"], args["to"], message)
