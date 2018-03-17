@@ -5,6 +5,8 @@ import time
 import smtplib
 import argparse
 
+import request
+
 ################################################################################
 ## Args for sending email (sms)
 ap = argparse.ArgumentParser(description='SMS updates for TN flag status')
