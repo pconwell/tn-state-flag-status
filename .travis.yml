@@ -13,12 +13,7 @@ addons:
 #  - sudo apt-get install chromium-chromedriver
 
 env:
-  - USER=dummy
-  - PASSWORD=dummy
-  - SERVER=smtp.dummy.com
-  - FROM=from@dummy.com
-  - TO=to@dummy.com
-  - TEST=True
+  - USER=dummy PASSWORD=dummy SERVER=smtp.dummy.com FROM=from@dummy.com TO=to@dummy.com TEST=True
 
 install:
   - sudo cp -f ./chromedriver /usr/local/share/
