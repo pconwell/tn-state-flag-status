@@ -14,6 +14,7 @@ ap.add_argument("-s", "--server", required=True, help="SMTP server")
 ap.add_argument("--port", default=587, help="SMTP port")
 ap.add_argument("-f", "--from", required=True, help="FROM email address")
 ap.add_argument("-t", "--to", required=True, help="TO eamil address")
+ap.add_argument("--test", default=False, help="for travis ci (skips sending email)")
 args = vars(ap.parse_args())
 
 print(f"{args['user']}")
@@ -41,15 +42,18 @@ driver.quit()
 
 ################################################################################
 ## Send SMS for flag status
-server = smtplib.SMTP(args["server"], args["port"])
-server.starttls()
+if args['test']:
+    print("testing mode -- skipping email")
+else:
+    server = smtplib.SMTP(args["server"], args["port"])
+    server.starttls()
 
-server.login(args["user"], args["password"])
+    server.login(args["user"], args["password"])
 
-message = f"From: <{args['from']}>\n"
-message = message + f"To: <{args['to']}>\n"
-message = message + "Subject: TN Flag Status\n"
-message = message + "\n"
-message = message + f"{status.split(':')[1]}"
+    message = f"From: <{args['from']}>\n"
+    message = message + f"To: <{args['to']}>\n"
+    message = message + "Subject: TN Flag Status\n"
+    message = message + "\n"
+    message = message + f"{status.split(':')[1]}"
 
-server.sendmail(args["from"], args["to"], message)
+    server.sendmail(args["from"], args["to"], message)

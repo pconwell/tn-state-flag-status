@@ -12,6 +12,14 @@ addons:
 #  - sudo apt-get update
 #  - sudo apt-get install chromium-chromedriver
 
+env:
+  - USER=dummy
+  - PASSWORD=dummy
+  - SERVER=smtp.dummy.com
+  - FROM=from@dummy.com
+  - TO=to@dummy.com
+  - TEST=True
+
 install:
   - sudo cp -f ./chromedriver /usr/local/share/
   - sudo chmod +x /usr/local/share/chromedriver
@@ -19,4 +27,4 @@ install:
   - pip install selenium
 
 script:
-  - python ./status.py --user $USER --password $PASSWORD --server $SERVER --from $FROM --to $TO
+  - python ./status.py --user $USER --password $PASSWORD --server $SERVER --from $FROM --to $TO --test TEST
