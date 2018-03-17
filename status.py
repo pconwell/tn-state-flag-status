@@ -17,7 +17,7 @@ ap.add_argument("-t", "--to", required=True, help="TO eamil address")
 ap.add_argument("--test", default=False, help="for testing")
 args = vars(ap.parse_args())
 
-print(f"{args["user"]}")
+print(f"{args['user']}")
 
 # ################################################################################
 # ## Set options for Selenium
