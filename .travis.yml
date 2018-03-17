@@ -19,4 +19,5 @@ install:
   - pip install selenium
 
 script:
-  - python ./status.py --user $USER --password $PASSWORD --server $SERVER --from $FROM --to $TO --test $TEST
+  - echo $USER
+  - python ./status.py --user $USER --password $PASSWORD --server $SERVER --from $FROM --to $TO --test True
