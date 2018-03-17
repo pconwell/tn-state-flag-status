@@ -1,11 +1,9 @@
 ################################################################################
 ## Import Libraries
-from selenium import webdriver
-import time
 import smtplib
 import argparse
-
-import request
+import requests
+from bs4 import BeautifulSoup as bs
 
 ################################################################################
 ## Args for sending email (sms)
@@ -19,28 +17,13 @@ ap.add_argument("-t", "--to", required=True, help="TO eamil address")
 ap.add_argument("--test", default=False, help="for travis ci (skips sending email)")
 args = vars(ap.parse_args())
 
-print(f"{args['user']}")
-
 ################################################################################
 ## Set options for Selenium
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-options.add_argument('disable-gpu')
-options.add_argument('window-size=1920x1080')
-options.add_argument('log-level=3')
+p = requests.get("https://www.tn.gov/about-tn/flag-status.html")
 
-################################################################################
-## Get Flag Status
-driver = webdriver.Chrome(chrome_options=options)
-driver.get("https://www.tn.gov/about-tn/flag-status.html")
+s = bs(p.content, 'html.parser')
 
-flag = driver.find_element_by_class_name("textimage-text")
-
-status = flag.text
-print(status)
-
-driver.close()
-driver.quit()
+status = list(s.find('div', class_='textimage-text').children)[1].text
 
 ################################################################################
 ## Send SMS for flag status
