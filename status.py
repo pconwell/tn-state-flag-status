@@ -14,6 +14,7 @@ ap.add_argument("-s", "--server", required=True, help="SMTP server")
 ap.add_argument("--port", default=587, help="SMTP port")
 ap.add_argument("-f", "--from", required=True, help="FROM email address")
 ap.add_argument("-t", "--to", required=True, help="TO eamil address")
+ap.add_argument("--test", default=False, help="for testing")
 args = vars(ap.parse_args())
 
 ################################################################################
@@ -43,6 +44,9 @@ server = smtplib.SMTP(args["server"], args["port"])
 server.starttls()
 
 server.login(args["user"], args["password"])
+
+if args["test"] == True:
+    status = ":travis-ci testing"
 
 message = f"From: <{args['from']}>\n"
 message = message + f"To: <{args['to']}>\n"
