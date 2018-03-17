@@ -4,6 +4,11 @@ import smtplib
 import argparse
 import requests
 from bs4 import BeautifulSoup as bs
+import configparser
+
+config = configparser.ConfigParser()
+config.read("./status.ini")
+current = config['status']['current']
 
 ################################################################################
 ## Args for sending email (sms)
@@ -29,6 +34,8 @@ status = list(s.find('div', class_='textimage-text').children)[1].text
 ## Send SMS for flag status
 if args['test']:
     print("testing mode -- skipping email")
+elif current == status:
+    print("no update")
 else:
     server = smtplib.SMTP(args["server"], args["port"])
     server.starttls()
@@ -42,3 +49,8 @@ else:
     message = message + f"{status.split(':')[1]}"
 
     server.sendmail(args["from"], args["to"], message)
+
+    configf = open("./status.ini",'w')
+    config.set('status','current', status)
+    config.write(configf)
+    configf.close()
