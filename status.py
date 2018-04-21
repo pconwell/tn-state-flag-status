@@ -6,8 +6,11 @@ import requests
 from bs4 import BeautifulSoup as bs
 import configparser
 
+import unicodedata
+import xml.etree.ElementTree
+
 config = configparser.ConfigParser()
-config.read("./status.ini")
+config.read("./flagstatus.ini")
 current = config['status']['current']
 
 ################################################################################
@@ -28,9 +31,12 @@ p = requests.get("https://www.tn.gov/about-tn/flag-status.html")
 
 s = bs(p.content, 'html.parser')
 
-status = list(s.find('div', class_='textimage-text').children)[1].text
+status = list(s.find('div', class_='textimage-text').children)[1]
+
+status = ''.join(xml.etree.ElementTree.fromstring(status.encode('ascii',errors='ignore')).itertext())
 
 ################################################################################
+## Send SMS for flag status
 ## Send SMS for flag status
 if args['test']:
     print("testing mode -- skipping email")
@@ -42,15 +48,15 @@ else:
 
     server.login(args["user"], args["password"])
 
-    message = f"From: <{args['from']}>\n"
-    message = message + f"To: <{args['to']}>\n"
+    message = f"From: {args['from']}\n"
+    message = message + f"To: {args['to']}\n"
     message = message + "Subject: TN Flag Status\n"
     message = message + "\n"
-    message = message + f"{status.split(':')[1]}"
+    message = message + f"{status}"
 
     server.sendmail(args["from"], args["to"], message)
 
-    configf = open("./status.ini",'w')
-    config.set('status','current', status)
+    configf = open("./flagstatus.ini", 'w')
+    config.set('status', 'current', status)
     config.write(configf)
     configf.close()
