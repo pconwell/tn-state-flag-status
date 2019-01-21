@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pconwell/tn-state-flag-status.svg?branch=master)](https://travis-ci.org/pconwell/tn-state-flag-status)
 
-Checks the current status of the Tennessee State Flag and sends an email (sms) to a chosen email (phone number). To send to a phone number, find the email address associated with the phone's SMS. Typically it is something like <PHONENUMBER>@<carrier>.com.
+Checks the current status of the Tennessee State Flag and sends an email (sms) to a chosen email (phone number). To send to a phone number, find the email address associated with the phone's SMS. Typically it is something like [PHONENUMBER]@[carrier].com.
 
 ## Usage
 
